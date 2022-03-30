@@ -57,5 +57,6 @@ void TreeDtor(struct node_t * top)
         TreeDtor (top->left);
     if (top->right)
         TreeDtor (top->right);
+    free (top->lexem.lex.str);
     free (top);
 }

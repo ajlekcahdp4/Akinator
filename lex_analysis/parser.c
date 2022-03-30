@@ -11,13 +11,13 @@
 
 #define START_STATE -1 
 
-struct node_t *ParseS (struct lexer_state *pstate);
-struct lexem_t Current (struct lexer_state *pstate);
+struct node_t *ParseS     (struct lexer_state *pstate);
 struct node_t *ParseBrace (struct lexer_state *pstate);
-struct node_t *ParseStr (struct lexer_state *pstate);
-int IsBrace (struct lexer_state *pstate);
+struct node_t *ParseStr   (struct lexer_state *pstate);
+struct lexem_t Current    (struct lexer_state *pstate);
+int IsBrace  (struct lexer_state *pstate);
 int IsRBrace (struct lexer_state *pstate);
-int IsStr (struct lexer_state *pstate);
+int IsStr    (struct lexer_state *pstate);
 
 
 
@@ -28,9 +28,10 @@ struct node_t *BuildTree (struct lex_array_t *lexarr)
     struct lexer_state *pstate = calloc (1, sizeof(struct lexer_state));
     pstate->lexarr = lexarr;
     pstate->braces_state = START_STATE;
-    
-
     top = ParseS (pstate);
+
+    free (pstate);
+
     return top;
 }
 

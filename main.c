@@ -7,6 +7,15 @@
 #include "lex_analysis/lexer.h"
 #include "lex_analysis/parser.h"
 
+void End (struct lex_array_t *lex, struct node_t *top)
+{
+    TreeDtor (top);
+    free (lex->lexems);
+    free (lex);
+}
+
+
+
 int main ()
 {
     char *buf = 0;
@@ -19,9 +28,15 @@ int main ()
 
 
     struct node_t *top = BuildTree (lex);
+    
 
     TreeDump (top);
 
+
+
+    
+
+    End (lex, top);
     return 0;
 
 }
