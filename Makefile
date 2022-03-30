@@ -16,3 +16,5 @@ dump:
 	$(CC) $(DEBUG) -c $(CFLAGS) dump_tree/dump_tree.c
 tree_:
 	$(CC) $(DEBUG) -c $(CFLAGS) tree/tree.c
+clean:
+	rm -rf *.out *.o *.dot *.png vgcore.*
