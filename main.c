@@ -7,6 +7,8 @@
 #include "lex_analysis/lexer.h"
 #include "lex_analysis/parser.h"
 
+#define DUM
+
 void End (struct lex_array_t *lex, struct node_t *top)
 {
     TreeDtor (top);
@@ -20,22 +22,22 @@ int main ()
 {
     char *buf = 0;
     size_t len = LexerInput (&buf, "logs/tree.dat");
+    //==================Lexer====================
     struct lex_array_t *lex = LexString (buf, len);
     free (buf);
-
+    #ifdef DUMP
     PrintLex (lex);
-
-
-
+    #endif
+    //==================Parser===================
     struct node_t *top = BuildTree (lex);
-    
-
+    #ifdef DUMP
     TreeDump (top);
-
+    #endif
+    //=================Akinator==================
 
 
     
-
+    //===================End=====================
     End (lex, top);
     return 0;
 
