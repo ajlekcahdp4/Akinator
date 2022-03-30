@@ -1,3 +1,8 @@
+-Start the Project ( done 28.03 )
 - Basicly do smth ( done 29.03 )
 - build the tree
-    - Write ParseStr ()
+    - Write ParseStr ( done 30.03 )
+- Write Akinator itself
+    - Write one-time game 
+    - Write tree extension and writing to the tree.dat
+    
