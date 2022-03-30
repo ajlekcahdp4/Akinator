@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include "tree.h"
+#include "../lex_analysis/lexer.h"
 #include "../dump_tree/dump_tree.h"
 
 struct node_t
 {
-    char *data;
-    size_t size;
+    struct lexem_t lexem;
     struct node_t *left;
     struct node_t *right;
 };
@@ -20,6 +20,7 @@ struct node_t *TreeCreateNode ()
     return top;
 }
 
+#if 0
 struct node_t *TreeLeftInsert (struct node_t *top, char* data)
 {
     top->left = TreeCreateNode ();
@@ -33,6 +34,7 @@ struct node_t *TreeRightInsert (struct node_t *top, char* data)
     top->right->data = data;
     return top->right;
 }
+#endif
 
 #ifdef DUMP_INCLUDED
 

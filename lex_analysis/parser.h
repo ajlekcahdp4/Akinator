@@ -17,8 +17,7 @@ struct lexer_state
     struct lex_array_t *lexarr;
 };
 
-struct node_t *Buildtree (struct lex_array_t *lexarr);
-struct node_t *ParseS (struct lexer_state *pstate);
+struct node_t *BuildTree (struct lex_array_t *lexarr);
 
 
 #endif

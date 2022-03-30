@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "dump_tree.h"
+#include "../lex_analysis/lexer.h"
 
-
-struct node_t {
-    char *data;
+struct node_t
+{
+    struct lexem_t lexem;
     struct node_t *left;
     struct node_t *right;
 };
@@ -19,7 +20,7 @@ void DtStart (FILE* dotfile)
 
 void DtSetNode (FILE* dotfile, struct node_t *node)
 {
-    fprintf (dotfile, "Node%p [style=filled, fillcolor = \"palegreen\" ,label=\"%s\"];\n", node, node->data);
+    fprintf (dotfile, "Node%p [style=filled, fillcolor = \"palegreen\" ,label=\"%s\"];\n", node, node->lexem.lex.str);
 }
 
 void DtSetNodes (FILE *dotfile, struct node_t *top)
