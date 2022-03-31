@@ -45,13 +45,14 @@ struct node_t *ParseS (struct lexer_state *pstate)
         return top;//exit value
     
     
-    if (IsBrace (pstate))
+    while (IsBrace (pstate))
     {
         top = ParseBrace(pstate);
         return top;
     }
 
-    fprintf (stderr, "ERROR: Unknown type of lexem kind (don't even know how is it possible)\n");
+
+    fprintf (stderr, "ERROR: Unknown type of lexem kind %d (don't even know how is it possible)\n", Current(pstate).kind);
     exit(0);
 }
 
@@ -82,6 +83,15 @@ struct node_t *ParseBrace (struct lexer_state *pstate)
 
         top->left = lhs;
         top->right = rhs;
+        if (IsBrace (pstate))
+        {
+            pstate->cur += 1;
+        }
+        else
+        {
+            fprintf (stderr, "ERROR: missing '}'\n");
+            exit(0);
+        }
     }
     else
     {

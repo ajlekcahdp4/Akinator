@@ -8,11 +8,37 @@
 
 #define MAX_STR_LEN 256
 
+void   PrintLex    (struct lex_array_t *lex);
+void   PrintLexem  (struct lex_array_t *lex, size_t i);
+int    SkeepSpaces (const char *buf, size_t len, size_t *ip);
+int    LexInsert   (struct lex_array_t *lex, const char *buf, size_t len, size_t *i, size_t ip);
+size_t StrInsert   (struct lex_array_t *lex, const char *buf, size_t *i, size_t ip);
+size_t LexerInput  (char **buf, char *filename);
+char  *InputStr     (const char *buf, size_t *ip);
 
-void PrintLexem (struct lex_array_t *lex, size_t i);
-size_t StrInsert (struct lex_array_t *lex, const char *buf, size_t *i, size_t ip);
-int SkeepSpaces (const char *buf, size_t len, size_t *ip);
-int LexInsert (struct lex_array_t *lex,  const char *buf, size_t len, size_t *i, size_t ip);
+#define START_LEN 8
+char  *InputStr     (const char *buf, size_t *ip)
+{
+    char c = 0;
+    size_t len = START_LEN;
+    size_t i = 0;
+    char *str = calloc (len, sizeof(char));
+    c = buf[*ip];
+    while (c != '\0' && c != '\n' && c != '{' && c != '}')
+    {
+        if (i == len)
+        {
+            len *= 2;
+            str = realloc (str, len * sizeof(char));
+        }
+        str[i] = c;
+        *ip += 1;
+        i++;
+        c = buf[*ip];
+    }
+    return str;
+}
+#undef START_LEN
 
 size_t LexerInput (char **buf, char *filename)
 {
@@ -40,6 +66,7 @@ void PrintLex (struct lex_array_t *lex)
 {
     for (size_t i = 0; i < lex->size; i++)
         PrintLexem (lex, i);
+    printf ("\n");
 }
 
 void PrintLexem (struct lex_array_t *lex, size_t i)
@@ -68,10 +95,7 @@ size_t StrInsert (struct lex_array_t *lex, const char *buf, size_t *i, size_t ip
 {
     size_t str_len = 0;
     lex->lexems[ip].kind = STR;
-    lex->lexems[ip].lex.str = calloc (MAX_STR_LEN, sizeof(char));
-
-    str_len = sscanf (buf + *i, "%s", lex->lexems[ip].lex.str);
-    assert (str_len);
+    lex->lexems[ip].lex.str = InputStr (buf, i); //Cringe, must be changed
     
     str_len = strlen (lex->lexems[ip].lex.str);
 
@@ -124,7 +148,6 @@ int LexInsert (struct lex_array_t *lex,  const char *buf, size_t len, size_t *i,
     {
         lex->size += 1;
         str_len = StrInsert (lex, buf, i, ip);
-        *i += str_len;
     }
     return (int)*i;
 }
@@ -132,7 +155,7 @@ int LexInsert (struct lex_array_t *lex,  const char *buf, size_t len, size_t *i,
 struct lex_array_t *LexString (const char *buf, size_t len)
 {
     size_t size = 0;
-    size_t ip = 0;
+    size_t ip   = 0;
     struct lex_array_t *lex = calloc (1, sizeof(struct lex_array_t));
     assert (lex);
     lex->lexems = calloc (len, sizeof(struct lexem_t));

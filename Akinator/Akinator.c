@@ -7,14 +7,19 @@
 
 
 // Example of colorised printf ("\x1b[31mTest\x1b[0m\n");
+#define MAX_STR_LEN 256
 
 void Greeting ();
+void AskQuestion (struct node_t *top);
+char *InputAnswer ();
+void ClearBuffer ();
 
 
 int RunAkinator (struct node_t *top)
 {
     Greeting ();
-
+    AskQuestion (top);
+    return 0;
 }
 
 
@@ -22,7 +27,85 @@ int RunAkinator (struct node_t *top)
 void Greeting ()
 {
     printf ("Hi there. Let's play the game\n\n");
-    printf ("\x1b[31mI\x1b[33mm\x1b[1;33ma\x1b[32mg\x1b[36mi\x1b[34mn\x1b[35me\x1b[0m someone or something and I'll to guess\n\n");
+    printf ("\033[01;38;05;196mI\033[01;38;05;214mm\033[01;38;05;226ma\033[01;38;05;46mg\033[01;38;05;51mi\033[01;38;05;21mn\033[01;38;05;201me\x1b[0m someone or something and I'll try to guess\n\n");
     printf ("I will ask you a questions and you must give me an answers like \"y\" (Yes) or \"n\" (No)\n");
     printf ("Let's go!\n\n");
+}
+
+void AskQuestion (struct node_t *top)
+{
+    char *answ = NULL;
+    struct node_t *cur = top;
+    printf ("Q: %s\n", cur->lexem.lex.str);
+    answ = InputAnswer ();
+    if (strcmp (answ, "y") == 0)
+    {
+        cur = cur->left;
+        if (cur->left == NULL)
+        {
+            free(answ);
+            printf ("I guess, it's %s am I right?\n", top->left->lexem.lex.str);
+            answ = InputAnswer ();
+            if (strcmp(answ, "y") == 0)
+                printf ("Cool!\n");
+            else
+                printf ("Sorry, that all, I can do(9(\n"    );
+            free (answ);
+        }
+        else
+            AskQuestion (cur);
+    }
+    else if (top->right)
+    {
+        if (top->right->right)
+        {
+            free(answ);
+            AskQuestion (top->right);
+        }
+        else
+        {
+            free(answ);
+            printf ("I guess, it's %s am I right?\n", top->right->lexem.lex.str);
+            answ = InputAnswer ();
+            if (strcmp(answ, "y") == 0)
+                printf ("Cool!\n");
+            else
+                printf ("Sorry, that all, I can do(9(\n"    );
+            free (answ);
+        }
+    }
+    else
+    {
+        free(answ);
+        printf ("Sorry, that all, I can do(9(\n");
+    }
+}
+
+char *InputAnswer ()
+{
+    int res = 0;
+    size_t i = 0;
+    char *answ = calloc (MAX_STR_LEN, sizeof(char));
+    while (res == 0)
+    {
+        printf ("A: ");
+        scanf ("%s", answ);
+        if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
+        {
+            printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
+            while (answ[i] != 0)
+            {
+                answ[i] = 0;
+                i++;
+            }
+        }
+        else
+            res = 1;
+    }
+    return answ;
+}
+
+void ClearBuffer ()
+{
+    while (getchar ()) {;}
 }
