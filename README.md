@@ -12,7 +12,7 @@ This is my realisation of Akinator game.
 
 # How to clone:
 ```
-git clone https://github.com/ajlekcahdp4/Akinator
+git clone git@github.com:ajlekcahdp4/Akinator.git
 cd Akinator
 ```
 
