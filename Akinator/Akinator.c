@@ -145,13 +145,12 @@ char *InputAnswer ()
         if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
         {
             printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
-            if (strlen (answ) > 0)
-                ClearBuffer ();
             while (answ[i] != 0)
             {
                 answ[i] = 0;
                 i++;
             }
+            i = 0;
         }
         else
             res = 1;
