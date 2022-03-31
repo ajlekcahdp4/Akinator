@@ -53,14 +53,14 @@ Then, follow the instractions of the Akinator.
 
 Sage Akinator is very clever and can guess the person you imagine precisely. But even he can't always be right, and there are some cases when he just does not know the person you imagine.
 <p align="center">
-<img src="https://github.com/ajlekcahdp4/Akinator/main/examples/1.png">
+<img src="https://github.com/ajlekcahdp4/Akinator/blob/main/examples/1.png">
 </p>
 
 In this situations you can teach him, folowing his instructions:
 <p align="center">
-<img src="https://github.com/ajlekcahdp4/Akinator/main/examples/2.png">
+<img src="https://github.com/ajlekcahdp4/Akinator/blob/main/examples/2.png">
 </p>
 This wise man will remember it and guess it next time.
 <p align="center">
-<img src="https://github.com/ajlekcahdp4/Akinator/main/examples/3.png">
+<img src="https://github.com/ajlekcahdp4/Akinator/blob/main/examples/3.png">
 </p>
