@@ -8,6 +8,7 @@
 #include "lex_analysis/parser.h"
 
 #define DUMP
+#undef DUMP
 
 void End (struct lex_array_t *lex, struct node_t *top)
 {
@@ -15,10 +16,6 @@ void End (struct lex_array_t *lex, struct node_t *top)
     free (lex->lexems);
     free (lex);
 }
-
-
-
-
 
 
 int main ()
@@ -29,19 +26,14 @@ int main ()
     //==================Lexer====================
     struct lex_array_t *lex = LexString (buf, len);
     free (buf);
-    #ifdef DUMP
-    //PrintLex (lex);
-    #endif
     //==================Parser===================
     struct node_t *top = BuildTree (lex);
     //=================Akinator==================
-
     RunAkinator (top);
-
+    //===================End=====================
     #ifdef DUMP
     TreeDump (top);
     #endif
-    //===================End=====================
     End (lex, top);
     return 0;
 

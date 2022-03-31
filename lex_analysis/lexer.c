@@ -121,7 +121,6 @@ int SkeepSpaces (const char *buf, size_t len, size_t *ip)
 int LexInsert (struct lex_array_t *lex,  const char *buf, size_t len, size_t *i, size_t ip)
 {
     int res = 0;
-    size_t str_len = 0;
     res = SkeepSpaces (buf, len, i);
 
     if (!res)
@@ -154,14 +153,13 @@ int LexInsert (struct lex_array_t *lex,  const char *buf, size_t len, size_t *i,
     else
     {
         lex->size += 1;
-        str_len = StrInsert (lex, buf, i, ip);
+        StrInsert (lex, buf, i, ip);
     }
     return (int)*i;
 }
 
 struct lex_array_t *LexString (const char *buf, size_t len)
 {
-    size_t size = 0;
     size_t ip   = 0;
     struct lex_array_t *lex = calloc (1, sizeof(struct lex_array_t));
     assert (lex);
