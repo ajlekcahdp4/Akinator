@@ -2,14 +2,14 @@
 # <p align = "center"><font color = "#33ccff">Akinator game</font></p>
 ## This is my realisation of Akinator game.
 
-# <p align = "center">Table of contents:</p>
+# Table of contents:
 - [How to clone](#how-to-clone)
 
 - [Dependencies](#dependencies)
 
 - [How to use](#how-to-use)
 
-# <p align = "center">How to clone:</p>
+# How to clone:
 ```
 git clone https://github.com/ajlekcahdp4/Akinator
 cd Akinator
