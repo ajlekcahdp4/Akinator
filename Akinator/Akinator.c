@@ -6,7 +6,6 @@
 #include "Akinator.h"
 
 
-// Example of colorised printf ("\x1b[31mTest\x1b[0m\n");
 #define MAX_STR_LEN 256
 
 void Greeting ();
