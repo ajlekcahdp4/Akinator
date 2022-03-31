@@ -55,12 +55,12 @@ struct node_t *InsertNewNode (struct node_t *leaf)
     new_r_leaf->lexem.kind = STR;
     new_r_leaf->lexem.lex.str = leaf->lexem.lex.str;
     printf ("Oh, no! Seems like I don't know who is it!\n");
-    printf ("Who was it?\n");
+    printf ("Who was it?\nA: ");
     Name = StdioInputStr ();
     new_l_leaf->lexem.lex.str = Name;
 
-    printf ("How does %s differ from %s?\n", Name, leaf->lexem.lex.str);
-    Question = StdioInputStr ();
+    printf ("How does %s differ from %s?\n A: ", Name, leaf->lexem.lex.str);
+    Question = StdioInputStr (); 
     strcat (Question, "?");
     leaf->lexem.lex.str = Question;
     leaf->left = new_l_leaf;
@@ -183,6 +183,8 @@ char  *StdioInputStr ()
     size_t i = 0;
     char *str = calloc (len, sizeof(char));
     c = getchar();
+    while (c == '\n')
+        c = getchar();
     while (isalpha(c) || (isspace(c) && (c != '\n')))
     {
         if (i == len)
