@@ -4,27 +4,27 @@ TMP_P = temp/
 CC = gcc
 DEBUG = 
 
-all: Akinator
+all: PROGRAM
 
-Akinator: create_folder lexer parser tree dump akinator main
+PROGRAM: create_folder LEXER PARSER TREE DUMP AKINATOR MAIN
 	$(CC) $(DEBUG) $(CFALGS) $(TMP_P)main.o $(TMP_P)lexer.o $(TMP_P)parser.o $(TMP_P)tree.o $(TMP_P)dump_tree.o $(TMP_P)Akinator.o -o Play
 
-main:
+MAIN:
 	$(CC) $(DEBUG) -c $(CFLAGS) main.c -o $(TMP_P)main.o
 
-lexer:
+LEXER:
 	$(CC) $(DEBUG) -c $(CFLAGS) lex_analysis/lexer.c -o $(TMP_P)lexer.o
 
-parser:
+PARSER:
 	$(CC) $(DEBUG) -c $(CFLAGS) lex_analysis/parser.c -o $(TMP_P)parser.o
 
-dump:
+DUMP:
 	$(CC) $(DEBUG) -c $(CFLAGS) dump_tree/dump_tree.c -o $(TMP_P)dump_tree.o
 
-tree:
+TREE:
 	$(CC) $(DEBUG) -c $(CFLAGS) tree/tree.c -o $(TMP_P)tree.o
 
-akinator:
+AKINATOR:
 	$(CC) $(DEBUG) -c $(CFLAGS) Akinator/Akinator.c -o $(TMP_P)Akinator.o
 
 create_folder:
