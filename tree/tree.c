@@ -20,33 +20,20 @@ struct node_t *TreeCreateNode ()
     return top;
 }
 
-#if 0
-struct node_t *TreeLeftInsert (struct node_t *top, char* data)
-{
-    top->left = TreeCreateNode ();
-    top->left->data = data;
-    return top->left;
-}
 
-struct node_t *TreeRightInsert (struct node_t *top, char* data)
-{
-    top->right = TreeCreateNode ();
-    top->right->data = data;
-    return top->right;
-}
-#endif
 
 #ifdef DUMP_INCLUDED
 
 void TreeDump (struct node_t *top)
 {
-    FILE *dotfile = fopen ("dump.dot", "w");
+    FILE *dotfile = fopen ("temp/dump.dot", "w");
+    assert (dotfile);
     DtStart (dotfile);
     DtSetNodes (dotfile, top);
     DtSetDependencies (dotfile, top);
     DtEnd (dotfile);
     fclose (dotfile);
-    system ("dot dump.dot -T png -o dump.png");
+    system ("dot temp/dump.dot -T png -o dump.png");
 }
 
 #endif

@@ -8,7 +8,6 @@
 #include "lex_analysis/parser.h"
 
 #define DUMP
-#undef DUMP
 
 void End (struct lex_array_t *lex, struct node_t *top)
 {
