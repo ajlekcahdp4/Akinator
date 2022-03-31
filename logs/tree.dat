@@ -1,16 +1,19 @@
-{ Animal?
-	{ is a dog?
-		{ dog}
-		{ Poltorashka }
+{ is an animal?
+	{ can bark?
+		{ dog }
+		{ Poltorashka}
 	}
 	{ Teacher in MIPT?
 		{ Fucker?
 			{ Umnov }
 			{ Likes focuses?
 				{ Samarova}
-				{ Orlov }
+				{ Has cool beard?
+					{ Ogarkov}
+					{ Orlov }
+				}
 			}
 		}
-		{ Dzigurda }
+		{ Dzigurda}
 	}
 }

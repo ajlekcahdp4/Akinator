@@ -29,7 +29,7 @@ char  *InputStr     (const char *buf, size_t *ip)
     {
         if (i == len)
         {
-            size_t j = len - 1;
+            size_t j = len;
             len *= 2;
             str = realloc (str, len * sizeof(char));
             while (j < len)

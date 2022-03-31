@@ -25,11 +25,15 @@ int RunAkinator (struct node_t *top)
     char *res = NULL;
 
     res = Greeting ();
-    if (res && strcmp (res, "y") == 0)
+    while (res && strcmp (res, "y") == 0)
     {
+        free (res);
         AskQuestion (top);
         SaveTree (top);
+        printf ("\nDo you want to play one more time?\n");
+        res = InputAnswer ();
     }
+    printf ("Okey, see you later\n");
     free (res);
     return 0;
 }
@@ -71,8 +75,6 @@ char *Greeting ()
     
     if (strcmp (res, "y") == 0)
         printf ("Let's go!\n\n");
-    else
-        printf ("Okey, see you later\n");
     return res;
 }
 
@@ -91,7 +93,7 @@ void AskQuestion (struct node_t *top)
             printf ("I guess, it's %s am I right?\n", top->left->lexem.lex.str);
             answ = InputAnswer ();
             if (strcmp(answ, "y") == 0)
-                printf ("Cool!\n");
+                printf ("\nCool!\n");
             else
             {
                 InsertNewNode (cur);
@@ -116,7 +118,7 @@ void AskQuestion (struct node_t *top)
             printf ("I guess, it's %s am I right?\n", cur->lexem.lex.str);
             answ = InputAnswer ();
             if (strcmp(answ, "y") == 0)
-                printf ("Cool!\n");
+                printf ("\nCool!\n");
             else
             {
                 InsertNewNode (cur);
