@@ -30,18 +30,17 @@ int main ()
     struct lex_array_t *lex = LexString (buf, len);
     free (buf);
     #ifdef DUMP
-    PrintLex (lex);
+    //PrintLex (lex);
     #endif
     //==================Parser===================
     struct node_t *top = BuildTree (lex);
-    #ifdef DUMP
-    TreeDump (top);
-    #endif
     //=================Akinator==================
 
     RunAkinator (top);
 
-    
+    #ifdef DUMP
+    TreeDump (top);
+    #endif
     //===================End=====================
     End (lex, top);
     return 0;

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <ctype.h>
 #include "Akinator.h"
 
 
@@ -12,7 +13,8 @@ void Greeting ();
 void AskQuestion (struct node_t *top);
 char *InputAnswer ();
 void ClearBuffer ();
-
+struct node_t *InsertNewNode (struct node_t *leaf);
+char  *StdioInputStr ();
 
 int RunAkinator (struct node_t *top)
 {
@@ -21,6 +23,29 @@ int RunAkinator (struct node_t *top)
     return 0;
 }
 
+struct node_t *InsertNewNode (struct node_t *leaf)
+{
+    char *Name = NULL;
+    char *Question = NULL;
+    struct node_t *new_l_leaf = calloc (1, sizeof(struct node_t));
+    struct node_t *new_r_leaf = calloc (1, sizeof(struct node_t));
+
+    new_l_leaf->lexem.kind = STR;
+    new_r_leaf->lexem.kind = STR;
+    new_r_leaf->lexem.lex.str = leaf->lexem.lex.str;
+    printf ("Oh, no! Seems like I don't know who is it!\n");
+    printf ("Who was it?\n");
+    Name = StdioInputStr ();
+    new_l_leaf->lexem.lex.str = Name;
+
+    printf ("How does %s differ from %s?\n", Name, leaf->lexem.lex.str);
+    Question = StdioInputStr ();
+    strcat (Question, "?");
+    leaf->lexem.lex.str = Question;
+    leaf->left = new_l_leaf;
+    leaf->right = new_r_leaf;
+    return leaf;
+}
 
 
 void Greeting ()
@@ -48,7 +73,9 @@ void AskQuestion (struct node_t *top)
             if (strcmp(answ, "y") == 0)
                 printf ("Cool!\n");
             else
-                printf ("Sorry, that all, I can do(9(\n");
+            {
+                InsertNewNode (cur);
+            }
             free(answ);
         }
         else
@@ -56,28 +83,31 @@ void AskQuestion (struct node_t *top)
             AskQuestion (cur);
         }
     }
-    else if (top->right)
+    else if (cur->right)
     {
         free(answ);
-        if (top->right->right)
+        cur = cur->right;
+        if (cur->right)
         {
-            AskQuestion (top->right);
+            AskQuestion (cur);
         }
         else
         {
-            printf ("I guess, it's %s am I right?\n", top->right->lexem.lex.str);
+            printf ("I guess, it's %s am I right?\n", cur->lexem.lex.str);
             answ = InputAnswer ();
             if (strcmp(answ, "y") == 0)
                 printf ("Cool!\n");
             else
-                printf ("Sorry, that all, I can do(9(\n"    );
+            {
+                InsertNewNode (cur);
+            }
             free (answ);
         }
     }
     else
     {
         free(answ);
-        printf ("Sorry, that all, I can do(9(\n");
+        InsertNewNode(top);
     }
 }
 
@@ -89,7 +119,7 @@ char *InputAnswer ()
     while (res == 0)
     {
         printf ("A: ");
-        scanf ("%s", answ);
+        answ = StdioInputStr ();
         if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
         {
             printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
@@ -105,6 +135,34 @@ char *InputAnswer ()
     }
     return answ;
 }
+
+
+
+
+#define START_LEN 8
+char  *StdioInputStr ()
+{
+    char c = 0;
+    size_t len = START_LEN;
+    size_t i = 0;
+    char *str = calloc (len, sizeof(char));
+    c = getchar();
+    while (isalpha(c) || (isspace(c) && (c != '\n')))
+    {
+        if (i == len)
+        {
+            len *= 2;
+            str = realloc (str, len * sizeof(char));
+        }
+        str[i] = c;
+        i++;
+        c = getchar();
+    }
+    return str;
+}
+#undef START_LEN
+
+
 
 void ClearBuffer ()
 {
