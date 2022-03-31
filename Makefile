@@ -6,25 +6,26 @@ DEBUG =
 
 all: PROGRAM
 
-PROGRAM: create_folder LEXER PARSER TREE DUMP AKINATOR MAIN
+PROGRAM: create_folder LEXER_T PARSER_T TREE_T DUMP_T AKINATOR_T MAIN_T
 	$(CC) $(DEBUG) $(CFALGS) $(TMP_P)main.o $(TMP_P)lexer.o $(TMP_P)parser.o $(TMP_P)tree.o $(TMP_P)dump_tree.o $(TMP_P)Akinator.o -o Play
+	rm -rf $(TMP_P)
 
-MAIN:
+MAIN_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) main.c -o $(TMP_P)main.o
 
-LEXER:
+LEXER_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) lex_analysis/lexer.c -o $(TMP_P)lexer.o
 
-PARSER:
+PARSER_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) lex_analysis/parser.c -o $(TMP_P)parser.o
 
-DUMP:
+DUMP_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) dump_tree/dump_tree.c -o $(TMP_P)dump_tree.o
 
-TREE:
+TREE_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) tree/tree.c -o $(TMP_P)tree.o
 
-AKINATOR:
+AKINATOR_T:
 	$(CC) $(DEBUG) -c $(CFLAGS) Akinator/Akinator.c -o $(TMP_P)Akinator.o
 
 create_folder:
