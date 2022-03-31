@@ -1,6 +1,6 @@
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
 # <p align = "center"><font color = "#33ccff">Akinator game</font></p>
-## This is my realisation of Akinator game.
+This is my realisation of Akinator game.
 
 # Table of contents:
 - [How to clone](#how-to-clone)
@@ -15,7 +15,7 @@ git clone https://github.com/ajlekcahdp4/Akinator
 cd Akinator
 ```
 
-# <p align = "center"> Dependencies:</p>
+# Dependencies:
 ## 1) Graphviz
 
 You can instal graphviz by apt or apt-get:
@@ -36,7 +36,7 @@ Or by using pacman (For Arch and Manjaro linux)
 ```console
 sudo pacman -S make
 ```
-# <p align = "center">How to use </p>
+# How to use
 
 After [cloning](#how-to-clone) this repsitory, just run
 ```console
