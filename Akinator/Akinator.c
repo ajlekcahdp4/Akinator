@@ -9,17 +9,28 @@
 
 #define MAX_STR_LEN 256
 
-void Greeting ();
+char *Greeting ();
 void AskQuestion (struct node_t *top);
 char *InputAnswer ();
 void ClearBuffer ();
 struct node_t *InsertNewNode (struct node_t *leaf);
 char  *StdioInputStr ();
+void SaveTree (struct node_t *top);
+void PrintNode (FILE *f, struct node_t *top, char *prefix);   
+
+
 
 int RunAkinator (struct node_t *top)
 {
-    Greeting ();
-    AskQuestion (top);
+    char *res = NULL;
+
+    res = Greeting ();
+    if (res && strcmp (res, "y") == 0)
+    {
+        AskQuestion (top);
+        SaveTree (top);
+    }
+    free (res);
     return 0;
 }
 
@@ -48,12 +59,21 @@ struct node_t *InsertNewNode (struct node_t *leaf)
 }
 
 
-void Greeting ()
+char *Greeting ()
 {
+    char *res = NULL;
     printf ("Hi there. Let's play the game\n\n");
     printf ("\033[01;38;05;196mI\033[01;38;05;214mm\033[01;38;05;226ma\033[01;38;05;46mg\033[01;38;05;51mi\033[01;38;05;21mn\033[01;38;05;201me\x1b[0m someone or something and I'll try to guess\n\n");
     printf ("I will ask you a questions and you must give me an answers like \"y\" (Yes) or \"n\" (No)\n");
-    printf ("Let's go!\n\n");
+    printf ("Want to start?\n");
+
+    res = InputAnswer();
+    
+    if (strcmp (res, "y") == 0)
+        printf ("Let's go!\n\n");
+    else
+        printf ("Okey, see you later\n");
+    return res;
 }
 
 void AskQuestion (struct node_t *top)
@@ -115,7 +135,7 @@ char *InputAnswer ()
 {
     int res = 0;
     size_t i = 0;
-    char *answ = calloc (MAX_STR_LEN, sizeof(char));
+    char *answ = NULL;
     while (res == 0)
     {
         printf ("A: ");
@@ -123,7 +143,8 @@ char *InputAnswer ()
         if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
         {
             printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
-            ClearBuffer ();
+            if (strlen (answ) > 0)
+                ClearBuffer ();
             while (answ[i] != 0)
             {
                 answ[i] = 0;
@@ -151,8 +172,14 @@ char  *StdioInputStr ()
     {
         if (i == len)
         {
+            size_t ip = len;
             len *= 2;
             str = realloc (str, len * sizeof(char));
+            while (ip < len)
+            {
+                str[ip] = '\0';
+                ip += 1;
+            }
         }
         str[i] = c;
         i++;
@@ -167,4 +194,35 @@ char  *StdioInputStr ()
 void ClearBuffer ()
 {
     while (getchar () != '\n') {;}
+}
+
+
+void SaveTree (struct node_t *top)
+{
+    FILE* f = fopen ("logs/tree.dat", "w");
+    assert (f);
+    PrintNode (f, top, "");
+    fclose (f);
+}
+
+void PrintNode (FILE *f, struct node_t *top, char *prefix)
+{
+    assert (f);
+    char *new_prefix = calloc (MAX_STR_LEN, sizeof (char));
+    strcat (new_prefix, prefix);
+    strcat (new_prefix, "\t");
+    if (top->left)
+    {
+        fprintf (f, "%s{ %s\n", prefix, top->lexem.lex.str);
+        
+        PrintNode (f, top->left, new_prefix);
+        PrintNode (f, top->right, new_prefix);
+
+        fprintf(f, "%s}\n", prefix);
+    }
+    else
+    {
+        fprintf (f, "%s{ %s}\n", prefix, top->lexem.lex.str);
+    }
+    free (new_prefix);
 }

@@ -14,7 +14,8 @@ int    SkeepSpaces (const char *buf, size_t len, size_t *ip);
 int    LexInsert   (struct lex_array_t *lex, const char *buf, size_t len, size_t *i, size_t ip);
 size_t StrInsert   (struct lex_array_t *lex, const char *buf, size_t *i, size_t ip);
 size_t LexerInput  (char **buf, char *filename);
-char  *InputStr     (const char *buf, size_t *ip);
+char  *InputStr    (const char *buf, size_t *ip);
+
 
 #define START_LEN 8
 char  *InputStr     (const char *buf, size_t *ip)
@@ -22,14 +23,20 @@ char  *InputStr     (const char *buf, size_t *ip)
     char c = 0;
     size_t len = START_LEN;
     size_t i = 0;
-    char *str = calloc (len, sizeof(char));
+    char *str = calloc (len + 1, sizeof(char));
     c = buf[*ip];
     while (c != '\0' && c != '\n' && c != '{' && c != '}')
     {
         if (i == len)
         {
+            size_t j = len - 1;
             len *= 2;
             str = realloc (str, len * sizeof(char));
+            while (j < len)
+            {
+                str[j] = '\0';
+                j += 1;
+            }
         }
         str[i] = c;
         *ip += 1;
@@ -95,7 +102,7 @@ size_t StrInsert (struct lex_array_t *lex, const char *buf, size_t *i, size_t ip
 {
     size_t str_len = 0;
     lex->lexems[ip].kind = STR;
-    lex->lexems[ip].lex.str = InputStr (buf, i); //Cringe, must be changed
+    lex->lexems[ip].lex.str = InputStr (buf, i);
     
     str_len = strlen (lex->lexems[ip].lex.str);
 
