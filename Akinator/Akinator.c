@@ -185,7 +185,7 @@ char  *StdioInputStr ()
     c = getchar();
     while (c == '\n')
         c = getchar();
-    while (isalpha(c) || (isspace(c) && (c != '\n')))
+    while (isdigit(c) || isalpha(c) || (isspace(c) && (c != '\n')))
     {
         if (i == len)
         {
