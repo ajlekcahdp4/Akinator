@@ -39,31 +39,32 @@ void AskQuestion (struct node_t *top)
     answ = InputAnswer ();
     if (strcmp (answ, "y") == 0)
     {
+        free (answ);
         cur = cur->left;
         if (cur->left == NULL)
         {
-            free(answ);
             printf ("I guess, it's %s am I right?\n", top->left->lexem.lex.str);
             answ = InputAnswer ();
             if (strcmp(answ, "y") == 0)
                 printf ("Cool!\n");
             else
-                printf ("Sorry, that all, I can do(9(\n"    );
-            free (answ);
+                printf ("Sorry, that all, I can do(9(\n");
+            free(answ);
         }
         else
+        {
             AskQuestion (cur);
+        }
     }
     else if (top->right)
     {
+        free(answ);
         if (top->right->right)
         {
-            free(answ);
             AskQuestion (top->right);
         }
         else
         {
-            free(answ);
             printf ("I guess, it's %s am I right?\n", top->right->lexem.lex.str);
             answ = InputAnswer ();
             if (strcmp(answ, "y") == 0)
@@ -92,6 +93,7 @@ char *InputAnswer ()
         if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
         {
             printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
+            ClearBuffer ();
             while (answ[i] != 0)
             {
                 answ[i] = 0;
@@ -106,5 +108,5 @@ char *InputAnswer ()
 
 void ClearBuffer ()
 {
-    while (getchar ()) {;}
+    while (getchar () != '\n') {;}
 }
