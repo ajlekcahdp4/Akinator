@@ -1,8 +1,5 @@
 { Animal?
-	{ is a dog?
-		{ dog}
-		{ Poltorashka }
-	}
+	{ Poltorashka }
 	{ Teacher in MIPT?
 		{ Fucker?
 			{ Umnov }

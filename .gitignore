@@ -1,7 +1,7 @@
 *.out
 *.o
 vgcore.*
-*.png
+./*.png
 *.dot
 .vscode
 Play
