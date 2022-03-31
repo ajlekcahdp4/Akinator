@@ -9,14 +9,16 @@
 
 #define MAX_STR_LEN 256
 
-char *Greeting ();
-void AskQuestion (struct node_t *top);
-char *InputAnswer ();
-void ClearBuffer ();
+char *Greeting      (void);
+char *InputAnswer   (void);
+char *StdioInputStr (void);
+int   AskQuestion   (struct node_t *top);
+void  SaveTree      (struct node_t *top);
+void  PrintNode     (FILE *f, struct node_t *top, char *prefix);   
+void  ClearBuffer   (void);
 struct node_t *InsertNewNode (struct node_t *leaf);
-char  *StdioInputStr ();
-void SaveTree (struct node_t *top);
-void PrintNode (FILE *f, struct node_t *top, char *prefix);   
+
+
 
 
 
@@ -24,11 +26,15 @@ int RunAkinator (struct node_t *top)
 {
     char *res = NULL;
 
+
     res = Greeting ();
+    if (res == 0)
+        return 0;
     while (res && strcmp (res, "y") == 0)
     {
         free (res);
-        AskQuestion (top);
+        if ( AskQuestion (top) == 0)
+            return 0;
         SaveTree (top);
         printf ("\nDo you want to play one more time?\n");
         res = InputAnswer ();
@@ -66,24 +72,28 @@ struct node_t *InsertNewNode (struct node_t *leaf)
 char *Greeting ()
 {
     char *res = NULL;
-    printf ("Hi there. Let's play the game\n\n");
+    printf ("Hi there! My name is Akinator!\nLet's play the game\n\n");
     printf ("\033[01;38;05;196mI\033[01;38;05;214mm\033[01;38;05;226ma\033[01;38;05;46mg\033[01;38;05;51mi\033[01;38;05;21mn\033[01;38;05;201me\x1b[0m someone or something and I'll try to guess\n\n");
     printf ("I will ask you a questions and you must give me an answers like \"y\" (Yes) or \"n\" (No)\n");
     printf ("Want to start?\n");
 
     res = InputAnswer();
-    
+    if (res == 0)
+        return res;
     if (strcmp (res, "y") == 0)
         printf ("Let's go!\n\n");
     return res;
 }
 
-void AskQuestion (struct node_t *top)
+int AskQuestion (struct node_t *top)
 {
     char *answ = NULL;
+    int res = 0;
     struct node_t *cur = top;
     printf ("Q: %s\n", cur->lexem.lex.str);
     answ = InputAnswer ();
+    if (answ == NULL)
+        return 0;
     if (strcmp (answ, "y") == 0)
     {
         free (answ);
@@ -102,7 +112,9 @@ void AskQuestion (struct node_t *top)
         }
         else
         {
-            AskQuestion (cur);
+            res = AskQuestion (cur);
+            if (res == 0)
+                return 0;
         }
     }
     else if (cur->right)
@@ -111,7 +123,9 @@ void AskQuestion (struct node_t *top)
         cur = cur->right;
         if (cur->right)
         {
-            AskQuestion (cur);
+            res = AskQuestion (cur);
+            if (res == 0)
+                return 0;
         }
         else
         {
@@ -131,29 +145,29 @@ void AskQuestion (struct node_t *top)
         free(answ);
         InsertNewNode(top);
     }
+    return 1;
 }
 
 char *InputAnswer ()
 {
     int res = 0;
-    size_t i = 0;
     char *answ = NULL;
     while (res == 0)
     {
         printf ("A: ");
         answ = StdioInputStr ();
-        if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0)
+        if (strcmp (answ, "y") != 0 && strcmp (answ, "n") != 0 && strcmp (answ, "q") != 0)
         {
             printf ("Incorrect input. Please, answer \"y\" (yes) or \"n\" (no)\n");
-            while (answ[i] != 0)
-            {
-                answ[i] = 0;
-                i++;
-            }
-            i = 0;
+            free (answ);
         }
         else
             res = 1;
+    }
+    if (strcmp (answ, "q") == 0)
+    {
+        free (answ);
+        return NULL;
     }
     return answ;
 }
@@ -175,7 +189,7 @@ char  *StdioInputStr ()
         {
             size_t ip = len;
             len *= 2;
-            str = realloc (str, len * sizeof(char));
+            str = realloc (str, (len + 1) * sizeof(char));
             while (ip < len)
             {
                 str[ip] = '\0';

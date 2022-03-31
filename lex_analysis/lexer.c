@@ -23,20 +23,17 @@ char  *InputStr     (const char *buf, size_t *ip)
     char c = 0;
     size_t len = START_LEN;
     size_t i = 0;
-    char *str = calloc (len + 1, sizeof(char));
+    char *str = calloc (len, sizeof(char));
     c = buf[*ip];
     while (c != '\0' && c != '\n' && c != '{' && c != '}')
     {
-        if (i == len)
+        if (i == len - 1)
         {
-            size_t j = len;
             len *= 2;
-            str = realloc (str, len * sizeof(char));
-            while (j < len)
-            {
-                str[j] = '\0';
-                j += 1;
-            }
+            char *str2 = calloc (len, sizeof(char));
+            strcat(str2, str);
+            free (str);
+            str = str2;
         }
         str[i] = c;
         *ip += 1;
