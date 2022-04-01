@@ -65,3 +65,13 @@ This wise man will remember it and guess it next time.
 <p align="center">
 <img src="https://github.com/ajlekcahdp4/Akinator/blob/main/examples/3.png">
 </p>
+
+# Other options:
+You can dump the binary tree of the Akinator after running with running:
+```
+./Play -dump-tree
+```
+Dump will look like this:
+<p align="center">
+<img src="https://github.com/ajlekcahdp4/Akinator/blob/main/examples/dump.png">
+</p>
