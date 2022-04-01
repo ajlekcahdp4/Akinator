@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #include "tree.h"
 #include "../lex_analysis/lexer.h"
 #include "../dump_tree/dump_tree.h"
@@ -38,6 +39,17 @@ void TreeDump (struct node_t *top)
 }
 
 #endif
+
+void CondDump (char *option, struct node_t *top)
+{
+    if (strcmp (option, "-dump-tree") == 0)
+        TreeDump (top);
+    else if (strcmp(option, "./Play") != 0)
+    {
+        fprintf (stderr, "ERROR: Unknown option \"%s\" program execution interrupted.", option);
+        exit(0);
+    }
+}
 
 void TreeDtor(struct node_t * top) 
 {

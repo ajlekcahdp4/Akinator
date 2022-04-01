@@ -17,7 +17,7 @@ void End (struct lex_array_t *lex, struct node_t *top)
 }
 
 
-int main ()
+int main (int argc, char **argv)
 {
 
     char *buf = 0;
@@ -30,9 +30,7 @@ int main ()
     //=================Akinator==================
     RunAkinator (top);
     //===================End=====================
-    #ifdef DUMP
-    TreeDump (top);
-    #endif
+    CondDump (argv[argc - 1], top);
     End (lex, top);
     return 0;
 

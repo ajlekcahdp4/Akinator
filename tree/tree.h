@@ -7,6 +7,7 @@ struct node_t *TreeCreateNode ();
 struct node_t *TreeLeftInsert (struct node_t *top, char* data);
 struct node_t *TreeRightInsert (struct node_t *top, char* data);
 void TreeDump (struct node_t *top);
-void TreeDtor(struct node_t * top);
+void TreeDtor (struct node_t * top);
+void CondDump (char *option, struct node_t *top);
 
 #endif
