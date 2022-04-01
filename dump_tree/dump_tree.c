@@ -36,12 +36,12 @@ void DtSetDependencies (FILE *dotfile, struct node_t *top)
 {
     if (top->left)
     {
-        fprintf (dotfile, "Node%p->Node%p[color=\"red\"]\n", top, top->left);
+        fprintf (dotfile, "Node%p->Node%p[color=\"red\", label = \"yes\"]\n", top, top->left);
         DtSetDependencies (dotfile, top->left);
     }
     if (top->right)
     {
-        fprintf (dotfile, "Node%p->Node%p[color=\"red\"]\n", top, top->right);
+        fprintf (dotfile, "Node%p->Node%p[color=\"red\", label = \"no\"]\n", top, top->right);
         DtSetDependencies (dotfile, top->right);
     }
     fprintf (dotfile, "\n");

@@ -26,14 +26,15 @@ struct node_t *TreeCreateNode ()
 
 void TreeDump (struct node_t *top)
 {
-    FILE *dotfile = fopen ("temp/dump.dot", "w");
+    FILE *dotfile = fopen ("dump.dot", "w");
     assert (dotfile);
     DtStart (dotfile);
     DtSetNodes (dotfile, top);
     DtSetDependencies (dotfile, top);
     DtEnd (dotfile);
     fclose (dotfile);
-    system ("dot temp/dump.dot -T png -o dump.png");
+    system ("dot dump.dot -T png -o dump.png");
+    system ("rm -rf dump.dot");
 }
 
 #endif
