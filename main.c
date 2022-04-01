@@ -7,15 +7,6 @@
 #include "lex_analysis/lexer.h"
 #include "lex_analysis/parser.h"
 
-#define DUMP
-
-void End (struct lex_array_t *lex, struct node_t *top)
-{
-    TreeDtor (top);
-    free (lex->lexems);
-    free (lex);
-}
-
 
 int main (int argc, char **argv)
 {
@@ -27,11 +18,13 @@ int main (int argc, char **argv)
     free (buf);
     //==================Parser===================
     struct node_t *top = BuildTree (lex);
+    free (lex->lexems);
+    free (lex);
     //=================Akinator==================
     RunAkinator (top);
     //===================End=====================
     CondDump (argv[argc - 1], top);
-    End (lex, top);
+    TreeDtor (top);
     return 0;
 
 }

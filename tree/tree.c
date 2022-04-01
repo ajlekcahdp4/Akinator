@@ -40,17 +40,6 @@ void TreeDump (struct node_t *top)
 
 #endif
 
-void CondDump (char *option, struct node_t *top)
-{
-    if (strcmp (option, "-dump-tree") == 0)
-        TreeDump (top);
-    else if (strcmp(option, "./Play") != 0)
-    {
-        fprintf (stderr, "ERROR: Unknown option \"%s\" program execution interrupted.", option);
-        exit(0);
-    }
-}
-
 void TreeDtor(struct node_t * top) 
 {
     if (top->left)
@@ -59,4 +48,17 @@ void TreeDtor(struct node_t * top)
         TreeDtor (top->right);
     free (top->lexem.lex.str);
     free (top);
+}
+
+
+void CondDump (char *option, struct node_t *top)
+{
+    if (strcmp (option, "-dump-tree") == 0)
+        TreeDump (top);
+    else if (strcmp(option, "./Play") != 0)
+    {
+        fprintf (stderr, "ERROR: Unknown option \"%s\" program execution interrupted.", option);
+        TreeDtor (top);
+        exit(0);
+    }
 }
