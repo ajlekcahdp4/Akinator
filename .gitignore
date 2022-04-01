@@ -4,4 +4,6 @@ vgcore.*
 ./*.png
 *.dot
 .vscode
+*.s
+*.dis
 Play
