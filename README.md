@@ -67,7 +67,7 @@ This wise man will remember it and guess it next time.
 </p>
 
 # Other options:
-You can dump the binary tree of the Akinator after running with `-tree-dump` option:
+You can dump the binary tree of the Akinator after running with `-dump-tree` option:
 ```
 ./Play -dump-tree
 ```
